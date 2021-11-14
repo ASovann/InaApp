@@ -1,0 +1,71 @@
+[
+    {
+        "name": "lampe",
+        "price": "34",
+        "description": "une lampe",
+        "image": "https://static.interiors.fr/media/glhj00_401__056918900_1454_07072020.jpg"
+    },
+    {
+        "name": "table",
+        "price": "50",
+        "description": "une table",
+        "image": "https://www.cocktail-scandinave.fr/Vbeta2018/wp-content/uploads/2020/01/NIBAIOTA56-2.jpg"
+
+    },
+    {
+        "name": "verre",
+        "price": "5",
+        "description": "un verre",
+        "image": "https://m.media-amazon.com/images/I/71n9yI16XbL._AC_SX425_.jpg"
+    },
+    {
+        "name": "television",
+        "price": "150",
+        "description": "une television",
+        "image": "https://img1.semeubler.com/5502-large_default/television-oceanic-102-cm.jpg"
+    },
+    {
+        "name": "lit",
+        "price": "75",
+        "description": "un lit",
+        "image": "https://www.cocktail-scandinave.fr/Vbeta2018/wp-content/uploads/2018/02/KPOULI-amb.jpg"
+    },
+    {
+        "name": "armoire",
+        "price": "200",
+        "description": "une armoire",
+        "image": "https://static.interiors.fr/media/323400_401__055533800_1111_07072020.jpg"
+    },
+    {
+        "name": "imprimante",
+        "price": "250",
+        "description": "une imprimante",
+        "image": "https://media.ldlc.com/r1600/ld/products/00/05/61/57/LD0005615707_2.jpg"
+    },
+    {
+        "name": "piano",
+        "price": "80",
+        "description": "un piano",
+        "image": "https://d1aeri3ty3izns.cloudfront.net/media/67/671442/600/preview.jpg"
+    },
+    {
+        "name": "dumbell",
+        "price": "20",
+        "description": "une paire de dumbell",
+        "image": "https://contents.mediadecathlon.com/p1248562/k$01448487cc01f6437afa685728065895"
+    },
+    {
+        "name": "tapis",
+        "price": "35",
+        "description": "un tapis",
+        "image": "https://www.bmstores.fr/import/images/thumbnails/450014/450014-large_default.jpg"
+    },
+    {
+        "name": "chaise",
+        "price": "7",
+        "description": "une chaise",
+        "image": "https://media.but.fr/images_produits/produit-xl/4894223222877_F.jpg"
+
+    }
+
+]
