@@ -1,12 +1,131 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { getStorage } from '../../localStorage/localStorage'
+import styles from "./styles";
+import { Card, FAB, Button, Header } from 'react-native-elements';
+import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+const mapStateToProps = (state) => {
+    return {
+        cartItems: state.cartItems
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch: (action) => {dispatch(action)}
+    }
+}
+
 
 class CartPage extends React.Component {
+
+    constructor(props){
+        super(props)
+        this.state= {
+            cart: [],
+        }
+        
+    }
+
+    
+    deleteItem(data){
+        this.setState({
+            cart: this.state.cart.filter((item) => item.name !== data.name)
+        })
+        
+        const action = { type: "DELETE_FROM_CART", value: data }
+        this.props.dispatch(action)
+    
+    }
+
+    componentDidMount() {
+        this.willFocusSubscription = this.props.navigation.addListener(
+            'focus',
+            () => {
+                this.setState({
+                    cart: this.props.cartItems
+                })
+            }
+        );
+    }
+
+    componentWillUnmount(){
+        this.willFocusSubscription()
+    }
+
+    componentDidUpdate(){
+        
+    }
+
+    
+
     render(){
-        return(
-            <View><Text>Bonjour</Text></View>
-        )
+        if(this.state.cart.length != 0){
+            return(
+                <SafeAreaView style={styles.root}>
+                    <View style={styles.header}>
+                    <Header 
+                            containerStyle={styles.headerNoItemHeader}
+                            rightComponent={
+                                <TouchableOpacity><Text>Buy</Text></TouchableOpacity>
+                            }
+                            leftComponent={
+                                <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}> <Text>Return</Text></TouchableOpacity>
+                            }
+
+                        ></Header>
+                    </View>
+                <View style={styles.body}>
+                    
+                {this.state.cart.map((item, i) => (
+                    <Card key={i} containerStyle={styles.container} wrapperStyle={styles.innerContainer}>
+                    <Card.Image source={{uri:item.image}} style={styles.image}></Card.Image>
+                    
+                    
+                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.price}>{item.price}$</Text>
+                    
+                    <View>
+                    </View>
+
+                    <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} onPress={() => {this.deleteItem(item)}} icon={<FontAwesomeIcon icon={faTrash} color={"#ffffff"}/>}></FAB>
+                    
+                    
+                </Card>
+                ))}
+                
+                </View>
+                </SafeAreaView>
+                
+            )
+        }else{
+            return(
+                <View style={styles.bodyNoItem}>
+                    <View style={styles.headerNoItem}>
+                        <Header 
+                            containerStyle={styles.headerNoItemHeader}
+                            rightComponent={
+                                <TouchableOpacity><Text>Buy</Text></TouchableOpacity>
+                            }
+                            leftComponent={
+                                <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}> <Text>Return</Text></TouchableOpacity>
+                            }
+
+                        ></Header>
+                    </View>
+                    <View style={styles.itemNoItem}>
+                    
+                        <Text style={styles.titleNoItem}>You have nothing in your cart</Text>
+                    
+                    </View>
+                </View>
+            )
+        }
+        
     }
 
 }
-export default CartPage
+export default connect(mapStateToProps, mapDispatchToProps)(CartPage)

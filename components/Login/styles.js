@@ -31,5 +31,17 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff'
+      },
+      backButton:{
+        flex: 1,
+        display: "flex",
+        left: 0,
+        right: 0,
+        bottom:10,
+        position:"absolute",
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#3740FE',
       }
+
 })

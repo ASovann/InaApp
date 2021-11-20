@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator,SafeAreaView  } from 'react-native';
 import {firebase, db} from '../../firebase/config';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import styles from './styles';
-
+import { getStorage, setStorage } from "../../localStorage/localStorage";
 
 export default class LoginPage extends Component {
   
@@ -41,7 +41,8 @@ export default class LoginPage extends Component {
           password: '',
           isLogged: true
         })
-        this.props.navigation.navigate({name:'Cart', params:{'isLogged': this.state.isLogged,'email': this.state.email}})
+        setStorage("Login", {"isLogged":this.state.isLogged})
+        this.props.navigation.navigate('Cart', {"isLogged": this.state.isLogged})
       })
       .catch(error => this.setState({ errorMessage: error.message }))
     }
@@ -81,7 +82,8 @@ export default class LoginPage extends Component {
           style={styles.loginText}
           onPress={() => this.props.navigation.navigate('Signin')}>
           Don't have account? Click here to signup
-        </Text>                          
+        </Text>
+        <Text style={styles.backButton}  onPress={() => this.props.navigation.navigate('Home')}>Back</Text>
       </View>
     );
   }

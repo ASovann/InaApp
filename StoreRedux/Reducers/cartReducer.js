@@ -4,14 +4,14 @@ function toCart(state = initialState, action){
     let nextState
     switch (action.type) {
         case 'ADD_TO_CART':
-            if(!state.cartItems.includes(action.value)){
+            
                 nextState = {
                     ...state,
                     cartItems:[...state.cartItems, action.value]
                 }
-            }
+            
 
-            return nextState || state
+            return nextState
         case 'DELETE_FROM_CART':
             if(state.cartItems.includes(action.value)){
                 nextState = {
@@ -24,3 +24,5 @@ function toCart(state = initialState, action){
             return state
     }
 }
+
+export default toCart;
