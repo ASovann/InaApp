@@ -5,7 +5,7 @@ import styles from "./styles";
 import { Card, FAB, Button, Header } from 'react-native-elements';
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const mapStateToProps = (state) => {
     return {
@@ -48,6 +48,7 @@ class CartPage extends React.Component {
                 this.setState({
                     cart: this.props.cartItems
                 })
+                console.log("cart cartpage:", this.state.cart)
             }
         );
     }
@@ -63,6 +64,7 @@ class CartPage extends React.Component {
     
 
     render(){
+        console.log("cart item cart page:",this.props.cartItems)
         if(this.state.cart.length != 0){
             return(
                 <SafeAreaView style={styles.root}>
@@ -72,8 +74,9 @@ class CartPage extends React.Component {
                             rightComponent={
                                 <TouchableOpacity><Text>Buy</Text></TouchableOpacity>
                             }
+                            centerComponent={{ text:'Your cart' , style:{color:'#fff'}}}
                             leftComponent={
-                                <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}> <Text>Return</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}> <FontAwesomeIcon icon={faArrowLeft} color={"#ffffff"}/></TouchableOpacity>
                             }
 
                         ></Header>
@@ -82,19 +85,19 @@ class CartPage extends React.Component {
                     
                 {this.state.cart.map((item, i) => (
                     <Card key={i} containerStyle={styles.container} wrapperStyle={styles.innerContainer}>
-                    <Card.Image source={{uri:item.image}} style={styles.image}></Card.Image>
+                        <Text style={styles.quantity}>Qty:{item.quantity}</Text>
+                        <Card.Image source={{uri:item.image}} style={styles.image}></Card.Image>
                     
                     
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.price}>{item.price}$</Text>
+                        <Text style={styles.name}>{item.name}</Text>
+                        <Text style={styles.price}>{item.price}$</Text>
                     
-                    <View>
-                    </View>
+                    
 
-                    <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} onPress={() => {this.deleteItem(item)}} icon={<FontAwesomeIcon icon={faTrash} color={"#ffffff"}/>}></FAB>
+                        <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} onPress={() => {this.deleteItem(item)}} icon={<FontAwesomeIcon icon={faTrash} color={"#ffffff"}/>}></FAB>
                     
                     
-                </Card>
+                    </Card>
                 ))}
                 
                 </View>
@@ -111,7 +114,7 @@ class CartPage extends React.Component {
                                 <TouchableOpacity><Text>Buy</Text></TouchableOpacity>
                             }
                             leftComponent={
-                                <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}> <Text>Return</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}> <FontAwesomeIcon icon={faArrowLeft} color={"#ffffff"}/></TouchableOpacity>
                             }
 
                         ></Header>

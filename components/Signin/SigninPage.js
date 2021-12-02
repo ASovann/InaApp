@@ -4,6 +4,7 @@ import {firebase, db} from '../../firebase/config';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import styles from '../Signin/styles';
 import { collection, addDoc } from "firebase/firestore";
+import { getStorage, setStorage } from "../../localStorage/localStorage";
 
 export default class SigninPage extends Component {
   
@@ -45,13 +46,14 @@ export default class SigninPage extends Component {
           email: '', 
           password: ''
         })
+        console.log("test")
         addDoc(collection(db, "users"),{
           id,
           displayName,
           email,
           password
         })
-
+        console.log('User registered successfully!')
         this.props.navigation.navigate('Login')
       })
       .catch(error => this.setState({ errorMessage: error.message }))      

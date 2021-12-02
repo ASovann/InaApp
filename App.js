@@ -5,6 +5,8 @@ import ArticleDetailsPage from "./components/Store/ArticleDetailsPage";
 import LoginPage from "./components/Login/LoginPage";
 import SigninPage from "./components/Signin/SigninPage";
 import CartPage from "./components/Cart/CartPage";
+import ProfilPage from './components/Profil/ProfilPage';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -15,6 +17,7 @@ import { Provider } from 'react-redux';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const Store = configureStore()
+
 
 function Root(){
   return(
@@ -37,14 +40,51 @@ function Root(){
   )
 }
 
-function logged(user){
+function profil(user){
   if(user.route.params.isLogged){
     return(
       <Stack.Navigator>
+      <Stack.Screen
+              name="profilPage"
+              component={ProfilPage}
+              options={{ headerShown: false }}
+              
+            >
+            </Stack.Screen>
+    </Stack.Navigator>
+    )
+  }else{
+    return(
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+          options={{ headerShown: false }}
+          initialParams={{direction: user.route.params.direction}}
+        >
+        </Stack.Screen>
+  
+        <Stack.Screen
+          name="Signin"
+          component={SigninPage}
+          options={{ headerShown: false }}
+        >
+        </Stack.Screen>
+      </Stack.Navigator>
+    )
+  }
+  
+  
+}
+
+function logged(user){
+  if(user.route.params.isLogged){
+    return(
+      <Stack.Navigator >
         <Stack.Screen
           name="yourCart"
           component={CartPage}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, }}
         >
         </Stack.Screen>
       </Stack.Navigator>
@@ -56,6 +96,8 @@ function logged(user){
           name="Login"
           component={LoginPage}
           options={{ headerShown: false }}
+          
+          initialParams={{direction: user.route.params.direction}}
         >
         </Stack.Screen>
   
@@ -80,9 +122,9 @@ export default class App extends React.Component{
           <Drawer.Navigator>
             <Drawer.Screen name="Main" component={Root} options={{ headerShown: false }}></Drawer.Screen>
           
-            <Drawer.Screen name="Cart" component={logged} options={{ headerShown: false }}></Drawer.Screen>
+            <Drawer.Screen name="Cart" component={logged} options={{ headerShown: false, drawerLabel: () => null, title: null, drawerIcon: () => null }}></Drawer.Screen>
             
-          
+            <Drawer.Screen name="Profil" component={profil} options={{ headerShown: false }}></Drawer.Screen>
           </Drawer.Navigator>
         </NavigationContainer>
         </Provider>

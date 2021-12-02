@@ -35,7 +35,7 @@ class ArticlePage extends React.Component {
                         <View>
                         </View>
 
-                        <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} icon={<FontAwesomeIcon icon={faCartPlus} style={styles.icon} />} onPress={() => this.submit({"name":item.name, "price":item.price, "image":item.image})}></FAB>
+                        <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} icon={<FontAwesomeIcon icon={faCartPlus} style={styles.icon} />} onPress={() => this.submit({"name":item.name, "price":item.price, "image":item.image, "quantity":1})}></FAB>
                         
                         
                     </Card>

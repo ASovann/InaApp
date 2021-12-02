@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator,Saf
 import {firebase, db} from '../../firebase/config';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import styles from './styles';
-import { getStorage, setStorage } from "../../localStorage/localStorage";
+import { getStorage, setStorage, updateStorage } from "../../localStorage/localStorage";
 
 export default class LoginPage extends Component {
-  
-  constructor() {
-    super();
+
+
+  constructor(props) {
+    super(props);
+    this.direction= this.props.route.params.direction
     this.state = { 
       email: '', 
       password: '',
@@ -35,14 +37,15 @@ export default class LoginPage extends Component {
       .then((res) => {
         console.log(res)
         console.log('User logged-in successfully!')
+        const email = this.state.email
         this.setState({
           isLoading: false,
           email: '', 
           password: '',
           isLogged: true
         })
-        setStorage("Login", {"isLogged":this.state.isLogged})
-        this.props.navigation.navigate('Cart', {"isLogged": this.state.isLogged})
+        setStorage("Login", {"isLogged":this.state.isLogged, "email": email})
+        this.props.navigation.navigate(this.direction, {"isLogged": this.state.isLogged})
       })
       .catch(error => this.setState({ errorMessage: error.message }))
     }

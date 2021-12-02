@@ -37,7 +37,9 @@ export default StyleSheet.create({
         color:"#cccccc",
         fontWeight: "bold",
     },
-    description: {
+    quantity: {
+        fontSize:"x-small",
+        fontWeight:"bold"
     },
     name:{
         fontWeight:"bold"

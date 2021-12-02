@@ -3,9 +3,9 @@ import ArticlePage from "../Store/ArticlePage";
 import { View, TouchableOpacity } from "react-native";
 import { setStorage, getStorage } from "../../localStorage/localStorage";
 import styles from './styles';
-import { Header, Button, Badge, Icon, withBadge } from'react-native-elements'
+import { Header, Button, Badge, Icon, withBadge, Avatar } from'react-native-elements'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faCartArrowDown, faBars } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -24,12 +24,12 @@ class HomePage extends React.Component {
 
     constructor(props){
         super(props);
-
-        this.get()
+        this.get();
+        this.cart = [];
         this.state = {
             isLogged: false,
             count: 0
-        }
+        };
     }
 
     
@@ -39,10 +39,7 @@ class HomePage extends React.Component {
             'focus',
             () => {
                 this.get()
-                this.setState({
-                    count: this.props.cartItems.length
-                })
-
+                this.cartCount()
             }
         );
     }
@@ -55,14 +52,35 @@ class HomePage extends React.Component {
         console.log("props:",this.props.cartItems)
     }
     handleCallBack = (childData) => {
-        
-        const action = { type: "ADD_TO_CART", value: childData }
-        this.props.dispatch(action)
-        this.setState({
-            count: this.props.cartItems.length + 1
-        })
-        
-        
+
+        if(this.props.cartItems.length != 0){
+            if(this.cart.includes(childData.name)){
+                const action = { type: "QTY_CART_ITEM", value: childData }
+                this.props.dispatch(action)
+                console.log("added quantity")
+                this.setState({
+                    count: this.state.count += 1
+                })
+            }else{
+                this.cart.push(childData.name)
+                const action = { type: "ADD_TO_CART", value: childData }
+                this.props.dispatch(action)
+                console.log("added to cart non empty")
+                this.setState({
+                    count: this.state.count += 1
+                })
+            }
+            
+        }else{
+            this.cart.push(childData.name)
+            const action = { type: "ADD_TO_CART", value: childData }
+            this.props.dispatch(action)
+            console.log("added to cart")
+            this.setState({
+                count: this.state.count += 1
+            })
+        }
+        console.log("state count",this.state.count)
     }
     get = async () => {
         await getStorage("Login").then((value) => {
@@ -73,18 +91,38 @@ class HomePage extends React.Component {
        
     }
 
+    cartCount = () =>{
+        let count = 0
+        if(this.props.cartItems.length !=0){
+            this.props.cartItems.map((item) => {
+                console.log("item qty:",item.quantity)
+                count += item.quantity
+
+            })
+            
+        }
+        this.setState({
+            count: count
+        })
+        console.log("state count",this.state.count)
+    }
 
     render(){
         return(
             <View >
                 <Header style={styles.header} 
                     rightComponent={
-                        <TouchableOpacity style={styles.buttonCart} onPress={() => {this.props.navigation.navigate('Cart', {"isLogged": this.state.isLogged})}}>
+                        <TouchableOpacity style={styles.buttonCart} onPress={() => {this.props.navigation.navigate('Cart', {"isLogged": this.state.isLogged, "direction": 'Cart'})}}>
                             <FontAwesomeIcon icon={faCartArrowDown} style={styles.buttonCartIcon} />
                             <Badge value={this.state.count} containerStyle={{ position: 'absolute', top: -4, right: 23 }}  />
                         </TouchableOpacity>
                     }
                     centerComponent={{ text:'Store' , style:{color:'#fff'}}}
+                    leftComponent={
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profil',{"isLogged": this.state.isLogged, "direction": 'Profil'})}>
+                            <Avatar  rounded  source={{ uri:'../../assets/adaptive-icon.png',}}/>
+                        </TouchableOpacity>
+                    }
                     >
                     
                     
