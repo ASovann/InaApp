@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import { getStorage } from '../../localStorage/localStorage'
+import { getStorage, setStorage, updateStorage } from '../../localStorage/localStorage'
 import styles from "./styles";
-import { Card, FAB, Button, Header } from 'react-native-elements';
+import { Card, FAB, Button, Header, Overlay } from 'react-native-elements';
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrash, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -61,7 +61,22 @@ class CartPage extends React.Component {
         
     }
 
-    
+    order = async() => {
+        if(this.state.cart.length != 0){
+            if(await getStorage("orders")!= null){
+                await updateStorage("orders",{order:[this.state.cart]})
+
+            } else {
+                await setStorage("orders",{order:[this.state.cart]})
+            }
+
+        }
+        this.setState({
+            cart: []
+        })
+
+        
+    }
 
     render(){
         console.log("cart item cart page:",this.props.cartItems)
@@ -69,10 +84,10 @@ class CartPage extends React.Component {
             return(
                 <SafeAreaView style={styles.root}>
                     <View style={styles.header}>
-                    <Header 
+                        <Header 
                             containerStyle={styles.headerNoItemHeader}
                             rightComponent={
-                                <TouchableOpacity><Text>Buy</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.order()}><Text>Buy</Text></TouchableOpacity>
                             }
                             centerComponent={{ text:'Your cart' , style:{color:'#fff'}}}
                             leftComponent={
@@ -99,7 +114,7 @@ class CartPage extends React.Component {
                     
                     </Card>
                 ))}
-                
+                    
                 </View>
                 </SafeAreaView>
                 

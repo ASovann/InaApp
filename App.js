@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import 'react-native-gesture-handler';
 import HomePage from "./components/Home/HomePage"
 import ArticleDetailsPage from "./components/Store/ArticleDetailsPage";
@@ -10,7 +10,6 @@ import ProfilPage from './components/Profil/ProfilPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { getStorage, setStorage } from './localStorage/localStorage';
 import configureStore from './StoreRedux/configureStore';
 import { Provider } from 'react-redux';
 

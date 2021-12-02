@@ -38,8 +38,5 @@ export default StyleSheet.create({
         backgroundColor:  "#5fbdba",
         margin:0,
     },
-    icon: {
-        color: "#ffffff", 
-    }
     
 })

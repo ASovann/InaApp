@@ -30,6 +30,7 @@ class HomePage extends React.Component {
             isLogged: false,
             count: 0
         };
+        console.log(this.props)
     }
 
     
@@ -49,7 +50,7 @@ class HomePage extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log("props:",this.props.cartItems)
+        console.log("props cart items:",this.props.cartItems)
     }
     handleCallBack = (childData) => {
 
@@ -84,9 +85,12 @@ class HomePage extends React.Component {
     }
     get = async () => {
         await getStorage("Login").then((value) => {
-            this.setState({
-                isLogged: value.isLogged
-            })
+            if(value != null){
+                this.setState({
+                    isLogged: value.isLogged
+                })
+            }
+            
         })
        
     }
@@ -127,7 +131,7 @@ class HomePage extends React.Component {
                     
                     
                 </Header>
-                <ArticlePage parentCallBack = {this.handleCallBack} ></ArticlePage>
+                <ArticlePage parentCallBack = {this.handleCallBack} navigation = {this.props.navigation}></ArticlePage>
                 
             </View>
         )

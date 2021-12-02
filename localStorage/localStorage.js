@@ -21,12 +21,20 @@ export async function getStorage(key){
 }
 
 export async function updateStorage(key, value){
-try{
-    const jsonValue = JSON.stringify(value)
-    await AsyncStorage.mergeItem(key, jsonValue)
+    try{
+        const jsonValue = JSON.stringify(value)
+        await AsyncStorage.mergeItem(key, jsonValue)
 
-} catch(e){
-    console.log("error update storage with key: "+ key," error: ", e )
+    } catch(e){
+        console.log("error update storage with key: "+ key," error: ", e )
+    }
+
 }
 
+export async function removeFromStorage(key){
+    try{
+        await AsyncStorage.removeItem(key)
+    } catch (e){
+        console.log("error remove storage with key: "+ key," error: ", e)
+    }
 }

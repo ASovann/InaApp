@@ -5,6 +5,7 @@ import { Card, FAB } from 'react-native-elements';
 import jsonData from '../../assets/data/articles.json';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 class ArticlePage extends React.Component {
 
@@ -13,6 +14,7 @@ class ArticlePage extends React.Component {
         this.state ={
             data: null
         }
+        console.log("your props:",this.props)
     }
 
     
@@ -25,17 +27,17 @@ class ArticlePage extends React.Component {
         return(
             <SafeAreaView style={styles.body}>
                 {jsonData.map((item, i) => (
-                    <Card key={i} containerStyle={styles.container} wrapperStyle={styles.innerContainer}>
-                        <Card.Image source={{uri:item.image}} style={styles.image}></Card.Image>
+                    <Card key={i} containerStyle={styles.container} wrapperStyle={styles.innerContainer} >
+                        <Card.Image source={{uri:item.image}} style={styles.image} onPress={() => {this.props.navigation.navigate('Details',{itemDetails: item})}}></Card.Image>
                         
                         
-                        <Text style={styles.name}>{item.name}</Text>
+                        <Text style={styles.name} >{item.name}</Text>
                         <Text style={styles.price}>{item.price}$</Text>
                         
                         <View>
                         </View>
 
-                        <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} icon={<FontAwesomeIcon icon={faCartPlus} style={styles.icon} />} onPress={() => this.submit({"name":item.name, "price":item.price, "image":item.image, "quantity":1})}></FAB>
+                        <FAB style={styles.button} size={"small"} color={"#5fbdba"} placement={"right"} icon={<FontAwesomeIcon icon={faCartPlus} color='#ffffff' />} onPress={() => this.submit({"name":item.name, "price":item.price, "image":item.image, "description":item.description, "quantity":1})}></FAB>
                         
                         
                     </Card>
