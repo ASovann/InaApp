@@ -114,13 +114,13 @@ class HomePage extends React.Component {
                     rightComponent={
                         <TouchableOpacity style={styles.buttonCart} onPress={() => {this.props.navigation.navigate('Cart', {"isLogged": this.state.isLogged, "direction": 'Cart'})}}>
                             <FontAwesomeIcon icon={faCartArrowDown} style={styles.buttonCartIcon} />
-                            <Badge value={this.state.count} containerStyle={{ position: 'absolute', top: -4, right: 23 }}  />
+                            <Badge value={this.state.count} containerStyle={{ position: 'absolute', top: -4, right: 23 }} badgeStyle={{ backgroundColor: 'red' }} />
                         </TouchableOpacity>
                     }
                     centerComponent={{ text:'Store' , style:{color:'#fff'}}}
                     leftComponent={
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Profil',{"isLogged": this.state.isLogged, "direction": 'Profil'})}>
-                            <Avatar  rounded  source={{ uri:'../../assets/adaptive-icon.png',}}/>
+                            <Avatar  rounded  source={require('../../assets/images/user-icon-default.jpg')}/>
                         </TouchableOpacity>
                     }
                     >
